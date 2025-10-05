@@ -1,0 +1,11 @@
+APRESENTAÇÃO SEMINÁRIO
+
+- apresentação do grupo, pedro infelizmente não estará presente :(
+
+- Serão apresentados 8 tópicos e a referência no fim do trabalho e o primeiro tópico ficará com Santin
+
+Minha parte:
+
+As entidades são as tabelas que aqui nós temos 5, a de cargo funcionários, empresa, cursos e de relacionamento entre funcionário e curso, já que 1 funcionário pode ter vários cursos e vários funcionarios podem ter o mesmo curso.
+
+Os atributos das classes no caso do cargo nós temos o cd do cargo e o cargo em si, na de funcionários temos o cpf, nome do funcionário, data de nascimento, telefone e as chave estrangeiras de cnpj da tb empresa e cd do cargo da tb cargo, na tabela empresa nos temos o cnpj, a empresa e o endereço, na tabela de relacionamento temos as chaves estrangeiras cd do curso da tb curso e o cpf da tabela funcionario e por fim na tabela curso temos os atributos cd curso e curso
