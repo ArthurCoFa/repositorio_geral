@@ -1,0 +1,29 @@
+
+// Insert		
+	Pessoa p = new Pessoa();
+	p.setNome("Arthur da Costa");
+	p.setIdade(18);
+		
+	pessoaRepository.save(p);
+	
+// Listar
+
+	List<Alunos> todosAlunos = alunosRepository.findAll();
+		
+	for(Alunos elemento : todosAlunos) {
+			
+		System.out.println(elemento);
+	}
+	
+// Deletar
+
+	alunosRepository.deleteById(8L);	
+		
+// Update, mesma coisa do Insert, mas colocando id no objeto
+
+	Alunos a = new Alunos();
+	a.setId(2L);
+	a.setIdade(22);
+	a.setNome("João");
+		
+	alunosRepository.save(a);
