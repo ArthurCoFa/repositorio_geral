@@ -1,0 +1,179 @@
+/* CSS para o Gerenciamento de Equipes - DARK MODE */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1e293b;
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #cbd5e0; 
+}
+
+.header-sico {
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    color: #4dd0e1;
+}
+
+.header-sico h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.main-container {
+    width: 90%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 30px;
+}
+
+.list-card, .form-card {
+    background-color: #2d3748;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.section-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #4dd0e1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #4dd0e1;
+}
+
+.sub-title {
+    border-bottom: 1px solid #4a5568;
+    color: #cbd5e0;
+}
+
+/* Input/Form Styles */
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group label {
+    flex-basis: 150px; 
+    flex-shrink: 0;
+    font-weight: 600;
+}
+
+.input-group input {
+    flex-grow: 1; 
+    padding: 10px;
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    background-color: #3d4758; 
+    color: #ffffff; 
+    font-size: 1em;
+}
+
+/* Tabela de Equipes */
+.teams-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.teams-table th, .teams-table td {
+    border: 1px solid #4a5568;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.teams-table th {
+    background-color: #3d4758;
+}
+
+.status-active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Lista de Membros (Vendedores) */
+.members-list-box {
+    background-color: #3d4758;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.members-list-box p {
+    font-weight: bold;
+    margin-top: 0;
+}
+
+.members-list-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.members-list-box li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed #4a5568;
+}
+
+/* Button Group Footer */
+.button-group-footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #4a5568;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary, .btn-edit, .btn-add, .btn-remove {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 0.9em;
+}
+
+.create-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary, .create-btn {
+    background-color: #28a745; 
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #4a5568; 
+    color: #ffffff;
+}
+
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-add {
+    background-color: #6f42c1; /* Roxo para Adicionar */
+    color: white;
+    height: 40px; 
+}
+
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+}

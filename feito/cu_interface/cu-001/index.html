@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema BeboSim - Login</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="script.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2 class = "titulo-login">BeboSim - Login</h2>
+            <p>Sistema Integrado de Controle Operacional</p>
+			
+			<div id ="login-feedback" class ="feedback-message"></div>
+
+            <form id = "loginForm">
+                <div class="input-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="login-btn">ENTRAR</button>
+            </form>
+
+            <a href="#" class="forgot-password" id ="forgot-password-link">Esqueceu a senha?</a>
+        </div>
+    </div>
+</body>
+</html>

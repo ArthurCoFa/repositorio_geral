@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Campanha</title>
+    <link rel="stylesheet" href="style.css"> 
+	<script src="script.js"></script>
+</head>
+<body>
+    <div class="header-sico">
+        <h1>Gestão de Campanhas Promocionais </h1>
+    </div>
+
+    <div class="main-container">
+        <div class="campanha-form-card">
+            <form id="campanha-details-form" class="form-card-content">
+                <div class="section-title">Dados da Campanha</div>
+                
+				<div class="input-group">
+                    <label for="idCampanha">ID da Campanha (Escreva o id para atualizações de campanha) </label>
+                    <input type="text" id="idCampanha">
+                </div>
+				
+                <div class="input-group">
+                    <label for="nomeCampanha">Nome da Campanha</label>
+                    <input type="text" id="nomeCampanha" required>
+                </div>
+
+                <div class="date-group">
+                    <div class="input-group half-width">
+                        <label for="dataInicio">Data de Início</label>
+                        <input type="date" id="dataInicio" required>
+                    </div>
+                    <div class="input-group half-width">
+                        <label for="dataFim">Data de Fim</label>
+                        <input type="date" id="dataFim" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="garotoPropaganda">Garoto Propaganda</label>
+                    <input type="text" id="garotoPropaganda" > 
+                </div>
+            </form>
+
+            <div class="button-group-footer">
+                <button type="submit" form="campanha-details-form" class="btn-primary">SALVAR CAMPANHA</button> 
+            </div>
+        </div>
+
+        <div class="produtos-card">
+            <div class="section-title">Adicionar Produto Promocional</div>
+
+            <form id="add-product-form" class="form-card-content">
+                
+                <div class="input-group">
+                    <label for="idCampanhaProduto">ID da Campanha</label>
+                    <input type="text" id="idCampanhaProduto" required>
+                    <small class="hint">Digite o ID da campanha que receberá o produto.</small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="idProduto">ID do Produto</label>
+                    <input type="text" id="idProduto" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="precoPromocional">Preço Promocional (Unitário)</label>
+                    <input type="number" id="precoPromocional" step="0.01" required>
+                </div>
+
+                <button type="submit" class="btn-tertiary">ADICIONAR À CAMPANHA</button>
+            </form>
+
+            <div class="section-title list-title">Produtos na Campanha</div>
+            
+            <table class="product-list-table">
+                <thead>
+                    <tr>
+                        <th>ID Campanha</th>
+						<th>Nome Campanha</th>
+						<th>ID Produto</th>
+                        <th>Nome Produto</th>
+                        <th>Preço Promocional</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

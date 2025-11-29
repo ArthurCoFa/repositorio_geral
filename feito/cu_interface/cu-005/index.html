@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICO - Consultar ATP</title>
+    <link rel="stylesheet" href="style.css"> 
+	<script src='script.js'></script>
+</head>
+<body>
+    <div class="header-sico">
+        <h1>Consulta de Disponibilidade</h1>
+    </div>
+
+    <div class="main-container">
+        <div class="search-card">
+            <div class="section-title">Buscar Produto</div>
+            <div class="input-group">
+                <label for="idProdutoSearch">ID do Produto</label>
+                <input type="text" id="idProdutoSearch" placeholder="Digite o ID para buscar ou deixe vazio para listar todos">
+                <button type="button" class="btn-primary btn-search">BUSCAR</button>
+            </div>
+        </div>
+
+        <div class="results-card">
+            <div class="section-title">Resultados da Consulta ATP</div>
+            <table class="atp-table">
+                <thead>
+                    <tr>
+                        <th>ID Produto</th>
+                        <th>Nome Produto</th>
+                        <th>Estoque Físico</th>
+                    </tr>
+                </thead>
+                <tbody id="atp-results">
+                    <tr>
+                        <td>01</td>
+                        <td>Refrigerante Coca-Cola 300mL Alumínio</td>
+                        <td>1500 Unidades</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>Suco de Uva 500mL PET</td>
+                        <td>800 Unidades</td>
+                    </tr>
+                     <tr>
+                        <td>03</td>
+                        <td>Refrigerante Coca-Cola 250mL Vidro</td>
+                        <td>200 Unidades</td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
