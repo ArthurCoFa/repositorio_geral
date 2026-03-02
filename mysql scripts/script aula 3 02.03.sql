@@ -109,3 +109,76 @@ FROM
     join tb_departamento d 
     on e.fk_departamento=d.id_departamento
 group by d.nm_departamento;
+
+
+SELECT 
+	d.nm_departamento,
+    round(AVG(salario), 2) AS salario_medio
+FROM
+	tb_empregado e
+		JOIN
+	tb_cargo c ON e.fk_cargo = c.id_cargo
+		JOIN
+	tb_departamento d ON e.fk_departamento = d.id_departamento
+WHERE
+	c.salario > 5000
+GROUP BY d.nm_departamento;
+
+SELECT 
+	d.nm_departamento,
+    round(AVG(c.salario), 2) AS salario_medio
+FROM 
+	tb_empregado e
+		JOIN
+	tb_cargo c ON e.fk_cargo = c.id_cargo
+		JOIN
+	tb_departamento d ON e.fk_departamento = d.id_departamento
+    
+WHERE
+	c.nm_cargo <> 'Estagiário'
+GROUP BY d.nm_departamento
+HAVING AVG(c.salario) > 6000;
+
+
+SELECT 
+	nome, fk_cargo, fk_departamento
+FROM 
+	tb_empregado
+WHERE
+	fk_cargo IN (
+    SELECT id_cargo
+    FROM tb_cargo
+    WHERE salario > (SELECT AVG(salario) FROM tb_cargo)
+);
+
+SELECT * FROM tb_empregado;
+
+-- 1.
+SELECT count(matricula) FROM tb_empregado;
+
+-- 2.
+SELECT SUM(salario) AS total_salario FROM tb_cargo;
+
+-- 3. 
+SELECT AVG(salario) AS media_salario FROM tb_cargo;
+-- round pode ser usado
+
+-- 4. 
+SELECT MAX(salario) AS maior_salario FROM tb_cargo;
+
+-- 5. 
+SELECT MIN(salario) AS maior_salario FROM tb_cargo;
+
+-- 6. 
+SELECT count(id_departamento) as num_departamentos FROM tb_departamento;
+
+-- 7. Contagem de Empregados por Cargo Liste os cargos e a quantidade de empregados em cada um, sem utilizar JOIN
+SELECT
+	 count(e.matricula) as quantidade_empregados, 
+     (SELECT 
+		c.nm_cargo
+	 FROM tb_cargo c
+     WHERE c.id_cargo = e.fk_cargo) AS nome
+FROM 
+	tb_empregado e;
+  
