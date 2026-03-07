@@ -172,13 +172,74 @@ SELECT MIN(salario) AS maior_salario FROM tb_cargo;
 -- 6. 
 SELECT count(id_departamento) as num_departamentos FROM tb_departamento;
 
--- 7. Contagem de Empregados por Cargo Liste os cargos e a quantidade de empregados em cada um, sem utilizar JOIN
 SELECT
-	 count(e.matricula) as quantidade_empregados, 
-     (SELECT 
-		c.nm_cargo
-	 FROM tb_cargo c
-     WHERE c.id_cargo = e.fk_cargo) AS nome
+	count(e.matricula) as qtd_empregados
 FROM 
-	tb_empregado e;
-  
+    tb_empregado e;
+
+-- 7. Contagem de Empregados por Cargo Liste os cargos e a quantidade de empregados em cada um, sem utilizar JOIN
+SELECT 
+	(SELECT nm_cargo
+    FROM tb_cargo
+    WHERE id_cargo = e.fk_cargo) as nome_cargo,
+	
+    COUNT(*) AS quantidade_empregados
+FROM tb_empregado e
+GROUP BY nome_cargo;
+
+-- 8. Salário Médio por Cargo Liste os cargos e o salário médio correspondente, sem usar JOIN.
+SELECT 
+	nm_cargo, AVG(salario) as salario_medio
+FROM tb_cargo
+GROUP BY nm_cargo;
+
+-- 9. Departamentos com mais de 5 Empregados Utilize uma subquery para listar os departamentos que possuem mais de 2 empregados.
+SELECT 
+	nm_departamento
+FROM
+	tb_departamento
+WHERE
+	id_departamento IN (
+    SELECT 
+		fk_departamento
+	FROM 
+		tb_empregado e
+	GROUP BY fk_departamento
+    HAVING COUNT(*) > 2
+    );
+
+-- 10. Identificação do Cargo com Maior Salário Recupere o nome do cargo com o maior salário utilizando uma subquery.
+
+SELECT 
+	nm_cargo
+FROM
+	tb_cargo
+WHERE 
+	salario = (
+    SELECT MAX(salario)
+    FROM tb_cargo
+    );
+	
+-- 11. Identificação do Cargo com Menor Salário Recupere o nome do cargo com o menor salário utilizando uma subquery.
+
+SELECT 
+	nm_cargo
+FROM
+	tb_cargo
+WHERE 
+	salario = (
+    SELECT MIN(salario)
+    FROM tb_cargo
+    );
+    
+-- 12. Funcionários com Salário Acima da Média Liste os IDs dos empregados cujo salário está acima da média salarial geral, sem JOIN.
+
+SELECT matricula
+FROM
+	tb_empregado e
+WHERE (SELECT salario
+        FROM tb_cargo
+        WHERE id_cargo = e.fk_cargo) > (
+	SELECT AVG(salario)
+    FROM tb_cargo
+    );
