@@ -119,15 +119,18 @@ INSERT INTO Demissao (id_demissao, id_empregado, data_demissao) VALUES
 (4, 4, '2022-05-31'),
 (5, 5, '2022-06-30');
 
+
 -- 4.1.	Liste o nome do empregador e o nome do empregado que possuem o mesmo id_empregador.
+-- Certo
+
 SELECT 
 	er.nome_empregador AS empregador,
     e.nome_empregado AS empregado
 FROM
 	empregados e
-    inner JOIN
+    INNER JOIN
     empregadores er ON e.id_empregador = er.id_empregador
-order by empregador, empregado asc;
+ORDER BY empregador, empregado asc;
 
 
 -- Outra maneira de fazer
@@ -136,49 +139,65 @@ SELECT
     e.nome_empregado AS empregado
 FROM
 	empregadores er
-    inner JOIN
+    INNER JOIN
     empregados e ON e.id_empregador = er.id_empregador
-order by empregador;
+ORDER BY empregador;
+
+-- RESPOSTA
+SELECT e.nome_empregador, d.nome_empregado
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador; 
 
 
 /* 4.2.	Exiba o nome do empregador, o nome do empregado e a 
    data de admissão do empregado para todos os registros da 
    tabela Empregados, mesmo que não haja correspondência com a tabela Empregadores. */
+-- CERTO
 
 SELECT 
 	er.nome_empregador AS empregador,
     e.nome_empregado AS empregado,
-    e.data_admissao
+    e.data_admissao AS 'data de admissão'
 FROM 
 	empregadores er
     RIGHT JOIN
     empregados e ON e.id_empregador = er.id_empregador;
     
+-- RESPOSTA
+SELECT e.nome_empregador, d.nome_empregado, d.data_admissao
+FROM Empregados d
+LEFT JOIN Empregadores e ON d.id_empregador = e.id_empregador;
+
+    
 /* 4.3. Liste o nome do empregador e o nome do empregado 
    apenas para os registros em que o empregado possui uma folha de pagamento. */
-   
-SELECT * 
-FROM folhapagamentos;
+-- CERTO
 
 SELECT * 
 FROM folhapagamentos;
    
 SELECT 
-	f.id_folha AS 'id da folha',
 	er.nome_empregador AS empregador,
-    e.nome_empregado AS empregado,
-    e.id_empregado AS 'id do empregado'
+    e.nome_empregado AS empregado
 FROM 
 	folhapagamentos f
-    JOIN 
+	INNER JOIN 
     empregados e ON f.id_folha = e.id_empregado
-    JOIN
+    INNER JOIN
     empregadores er ON er.id_empregador = e.id_empregador;
+
+-- RESPOSTA
+SELECT e.nome_empregador, d.nome_empregado
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador
+INNER JOIN FolhaPagamentos f ON d.id_empregado = f.id_empregado;
+
     
 /* 4.4.	Exiba o nome do empregador e o nome do empregado 
    para todos os registros da tabela Empregadores, mesmo que 
    não haja correspondência com a tabela Empregados. */
-   
+-- CERTO
+
 SELECT 
 	nome_empregador AS empregador,
     nome_empregado AS empregado
@@ -187,19 +206,26 @@ FROM
     LEFT JOIN
     empregados e ON e.id_empregador = er.id_empregador;
     
+-- RESPOSTA
+SELECT e.nome_empregador, d.nome_empregado
+FROM Empregadores e
+LEFT JOIN Empregados d ON e.id_empregador = d.id_empregador;
+
+    
 /* 4.5.	Liste o nome do empregador, o nome do empregado e 
    mês de referência da folha de pagamento para todos os 
    registros da tabela FolhaPagamentos. */
-   
+-- CERTO
+ 
 SELECT 
 	nome_empregador AS empregador,
     nome_empregado AS empregado,
     mes_referencia AS 'mês de referência'
 FROM
 	folhapagamentos f 
-    LEFT JOIN 
+    INNER JOIN 
     empregados e ON f.id_folha = e.id_empregado
-    JOIN 
+    INNER JOIN 
     empregadores er ON er.id_empregador = e.id_empregador;
 
 -- outra maneira
@@ -210,15 +236,23 @@ SELECT
     mes_referencia AS 'mês de referência'
 FROM
 	folhapagamentos f 
-    LEFT JOIN 
+    INNER JOIN 
     empregadores er ON f.id_folha = er.id_empregador
-    JOIN 
+    INNER JOIN 
     empregados e ON er.id_empregador = e.id_empregado;
+
+-- RESPOSTA 
+SELECT e.nome_empregador, d.nome_empregado, f.mes_referencia
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador
+INNER JOIN FolhaPagamentos f ON d.id_empregado = f.id_empregado;
+
 
 /* 4.6.	Exiba o nome do empregador, o nome do  empregado, 
    o cpf do empregado e o motivo de afastamento do empregado
    apenas para os registros em que o empregado possui um afastamento. */
-   
+-- CERTO
+
 SELECT 
 	nome_empregador AS empregador,
     nome_empregado AS empregado,
@@ -226,20 +260,76 @@ SELECT
     motivo
 FROM
 	afastamentos a
-    JOIN
+    INNER JOIN
 	empregados e ON a.id_afastamento = e.id_empregado
-    JOIN 
+    INNER JOIN 
     empregadores er ON e.id_empregador = er.id_empregador;
+
+-- RESPOSTA 
+SELECT e.nome_empregador, d.nome_empregado, d.cpf_empregado, a.motivo
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador
+INNER JOIN Afastamentos a ON d.id_empregado = a.id_empregado;
     
+
 /* 4.7.	Liste o nome do empregador e o tipo de acidente do empregado
    apenas para os registros em que o empregado possui uma Comunicação de Acidente de Trabalho (CAT). */
+-- 
+
+SELECT * FROM cat;
 
 SELECT 
 	nome_empregador AS empregador,
     tipo_acidente AS 'Tipo do Acidente'
 FROM 
 	cat c
-    JOIN 
+    INNER JOIN 
     empregados e ON e.id_empregado = c.id_cat
-    join
+    INNER JOIN 
     empregadores er ON er.id_empregador = e.id_empregador;
+
+-- RESPOSTA (NÃO TEM)
+
+
+/* 4.8. Exiba o nome do empregador e a data de aviso do empregado 
+   apenas para os registros em que o empregado possui um aviso prévio. */
+-- CERTO 
+   
+SELECT 
+	er.nome_empregador AS empregador,
+    a.data_aviso AS 'data de aviso'
+FROM 
+	avisoprevio a
+    INNER JOIN 
+    empregados e ON a.id_aviso_previo = e.id_empregado
+    INNER JOIN 
+    empregadores er ON er.id_empregador = e.id_empregador;
+    
+-- RESPOSTA
+SELECT e.nome_empregador, av.data_aviso
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador
+INNER JOIN AvisoPrevio av ON d.id_empregado = av.id_empregado;
+
+    
+/* 4.9. Liste o nome do empregador e a data de demissão do empregado
+   apenas para os registros em que o empregado possui uma demissão registrada */
+-- CERTO
+
+SELECT * from demissao;
+
+SELECT 
+	er.nome_empregador AS empregador,
+    d.data_demissao AS 'Data da demissão'
+FROM
+	demissao d
+    INNER JOIN
+    empregados e ON d.id_demissao = e.id_empregado
+    INNER JOIN
+    empregadores er ON e.id_empregador = er.id_empregador;
+    
+-- RESPOSTA
+SELECT e.nome_empregador, dem.data_demissao
+FROM Empregadores e
+INNER JOIN Empregados d ON e.id_empregador = d.id_empregador
+INNER JOIN Demissao dem ON d.id_empregado = dem.id_empregado;

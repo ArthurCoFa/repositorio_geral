@@ -153,45 +153,88 @@ WHERE
 
 SELECT * FROM tb_empregado;
 
--- 1.
+-- 1. CERTO?
 SELECT count(matricula) FROM tb_empregado;
 
--- 2.
+-- RESPOSTA
+SELECT COUNT(*) AS total_empregados FROM tb_empregado;
+
+-- 2. CERTO
 SELECT SUM(salario) AS total_salario FROM tb_cargo;
 
--- 3. 
+-- RESPOSTA
+SELECT SUM(salario) AS total_salarios FROM tb_cargo;
+
+-- 3. CERTO
 SELECT AVG(salario) AS media_salario FROM tb_cargo;
 -- round pode ser usado
 
--- 4. 
+-- RESPOSTA
+SELECT AVG(salario) AS media_salarial FROM tb_cargo;
+
+-- 4. CERTO
+SELECT MAX(salario) AS maior_salario FROM tb_cargo;
+
+-- RESPOSTA
 SELECT MAX(salario) AS maior_salario FROM tb_cargo;
 
 -- 5. 
 SELECT MIN(salario) AS maior_salario FROM tb_cargo;
 
--- 6. 
+-- RESPOSTA
+SELECT MIN(salario) AS menor_salario FROM tb_cargo;
+
+-- 6. CERTO
 SELECT count(id_departamento) as num_departamentos FROM tb_departamento;
 
+-- RESPOSTA
+SELECT COUNT(*) AS total_departamentos FROM tb_departamento;
+
+/* NÃO SEI O QUE É ISSO
 SELECT
 	count(e.matricula) as qtd_empregados
 FROM 
     tb_empregado e;
+*/
 
 -- 7. Contagem de Empregados por Cargo Liste os cargos e a quantidade de empregados em cada um, sem utilizar JOIN
 SELECT 
 	(SELECT nm_cargo
     FROM tb_cargo
-    WHERE id_cargo = e.fk_cargo) as nome_cargo,
-	
-    COUNT(*) AS quantidade_empregados
-FROM tb_empregado e
-GROUP BY nome_cargo;
+    WHERE id_cargo = e.fk_cargo) as cargo,
+    COUNT(*) AS 'quantidade de empregados'
+FROM 
+	tb_empregado e
+GROUP BY cargo;
+
+-- RESPOSTA (não funciona)
+SELECT cargo, COUNT(*) AS quantidade_empregados 
+FROM tb_empregado 
+GROUP BY cargo;
 
 -- 8. Salário Médio por Cargo Liste os cargos e o salário médio correspondente, sem usar JOIN.
 SELECT 
 	nm_cargo, AVG(salario) as salario_medio
 FROM tb_cargo
 GROUP BY nm_cargo;
+
+-- RESPOSTA (Ele usa a tabela empregado, mas falta o nome dos cargos)
+SELECT fk_cargo AS id_cargo,
+       (SELECT AVG(salario) 
+        FROM tb_cargo 
+        WHERE tb_cargo.id_cargo = tb_empregado.fk_cargo) AS media_salarial
+FROM tb_empregado
+GROUP BY fk_cargo;
+
+-- REFEITO
+SELECT
+	(SELECT nm_cargo
+	 FROM tb_cargo c
+	 WHERE e.fk_cargo = c.id_cargo) AS cargo,
+	 (SELECT round(AVG(salario), 2) 
+      FROM tb_cargo c
+      WHERE c.id_cargo = e.fk_cargo) AS 'salário médio'
+FROM tb_empregado e;
 
 -- 9. Departamentos com mais de 5 Empregados Utilize uma subquery para listar os departamentos que possuem mais de 2 empregados.
 SELECT 
@@ -208,6 +251,23 @@ WHERE
     HAVING COUNT(*) > 2
     );
 
+SELECT * FROM tb_departamento;
+
+-- RESPOSTA
+SELECT fk_departamento 
+FROM tb_empregado 
+GROUP BY fk_departamento 
+HAVING COUNT(*) > 2;
+
+-- REFEITO
+SELECT 
+	(SELECT nm_departamento
+     FROM tb_departamento d
+	 WHERE d.id_departamento = e.fk_departamento) AS departamento
+FROM tb_empregado e
+GROUP BY fk_departamento
+HAVING COUNT(*) > 2;
+
 -- 10. Identificação do Cargo com Maior Salário Recupere o nome do cargo com o maior salário utilizando uma subquery.
 
 SELECT 
@@ -219,7 +279,12 @@ WHERE
     SELECT MAX(salario)
     FROM tb_cargo
     );
-	
+
+-- RESPOSTA
+SELECT nm_cargo AS cargo 
+FROM tb_cargo 
+WHERE salario = (SELECT MAX(salario) FROM tb_cargo);	
+
 -- 11. Identificação do Cargo com Menor Salário Recupere o nome do cargo com o menor salário utilizando uma subquery.
 
 SELECT 
@@ -231,7 +296,13 @@ WHERE
     SELECT MIN(salario)
     FROM tb_cargo
     );
-    
+
+-- RESPOSTA
+SELECT nm_cargo 
+FROM tb_cargo 
+WHERE salario = (SELECT MIN(salario) FROM tb_cargo);
+
+
 -- 12. Funcionários com Salário Acima da Média Liste os IDs dos empregados cujo salário está acima da média salarial geral, sem JOIN.
 
 SELECT matricula
@@ -243,3 +314,12 @@ WHERE (SELECT salario
 	SELECT AVG(salario)
     FROM tb_cargo
     );
+    
+-- RESPOSTA
+SELECT matricula 
+FROM tb_empregado 
+WHERE fk_cargo IN (
+    SELECT id_cargo 
+    FROM tb_cargo 
+    WHERE salario > (SELECT AVG(salario) FROM tb_cargo)
+);
