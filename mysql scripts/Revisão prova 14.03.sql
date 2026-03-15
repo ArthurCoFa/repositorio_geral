@@ -66,10 +66,24 @@ GROUP BY c.nm_cargo;
 -- 8. Salário Médio por Cargo Liste os cargos e o salário médio correspondente, sem usar JOIN.
 SELECT
 	nm_cargo,
-	ROUND(AVG(salario), 2) AS 'Média salarial'
+	ROUND(AVG(salario), 2) AS media_salarial
 FROM 
 	tb_cargo
-GROUP BY nm_cargo;
+GROUP BY nm_cargo
+ORDER BY media_salarial asc;
+
+SELECT DISTINCT (
+	SELECT nm_cargo
+    FROM tb_cargo c
+    WHERE c.id_cargo = e.fk_cargo
+    ) AS cargo, (
+    SELECT ROUND(AVG(salario), 2) 
+    FROM tb_cargo c 
+    WHERE c.id_cargo = e.fk_cargo
+    ) AS media_salarial
+FROM
+	tb_empregado e
+ORDER BY media_salarial asc;
 
 -- 9. Departamentos com mais de 5 Empregados Utilize uma subquery para listar os departamentos que possuem mais de 2 empregados.
 
@@ -84,7 +98,7 @@ SELECT
 FROM
 	tb_empregado e
 GROUP BY fk_departamento
-HAVING COUNT(e.fk_departamento) > 2;
+HAVING COUNT(*) > 2;
 
 SELECT
 	d.nm_departamento
@@ -92,10 +106,20 @@ FROM
 	tb_departamento d
     INNER JOIN
     tb_empregado e ON e.fk_departamento = d.id_departamento
-group by d.nm_departamento
+GROUP BY d.nm_departamento
 HAVING COUNT(*) > 2;
     
-
+SELECT 
+	d.nm_departamento
+FROM 
+	tb_departamento d
+WHERE d.id_departamento IN (
+	SELECT e.fk_departamento
+    FROM tb_empregado e
+    GROUP BY e.fk_departamento
+    HAVING COUNT(*) > 2
+    );
+    
 -- 12. Funcionários com Salário Acima da Média Liste os IDs dos empregados cujo salário está acima da média salarial geral, sem JOIN.
 SELECT matricula
 FROM tb_empregado e
@@ -117,7 +141,29 @@ WHERE fk_cargo IN (
     FROM tb_cargo c)
     )
 order by matricula asc;
-    
+
+SELECT 
+	e.matricula
+FROM 
+	tb_empregado e
+    INNER JOIN
+	tb_cargo c ON c.id_cargo = e.fk_cargo
+WHERE c.salario > (
+	SELECT AVG(c.salario) FROM tb_cargo c
+    )
+ORDER BY matricula asc;
+
+SELECT 
+	e.matricula
+FROM 
+	tb_empregado e
+    INNER JOIN
+	tb_cargo c ON c.id_cargo = e.fk_cargo
+	INNER JOIN
+    (SELECT AVG(c.salario) AS media_salarial FROM tb_cargo c) m
+WHERE c.salario > m.media_salarial
+ORDER BY e.matricula asc;
+
 USE esocial;
     
 -- 4.1.	Liste o nome do empregador e o nome do empregado que possuem o mesmo id_empregador.
