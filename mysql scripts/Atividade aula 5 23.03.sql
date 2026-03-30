@@ -145,3 +145,116 @@ GROUP BY id_leito
 ORDER BY numero_reservas desc;
 
 SELECT * FROM vw_leitos_populares;
+
+/* 6. View de pacientes pediátricos
+Crie uma view vw_pacientes_pediatricos que mostre o nome e a data de reserva dos pacientes que utilizaram leitos do tipo "Pediátrico" */
+CREATE OR REPLACE VIEW vw_pacientes_pediatricos AS
+SELECT	
+	p.nome,
+    r.data_reserva	/*,
+    l.tipo*/
+FROM
+	pacientes p
+    JOIN 
+    reservas r ON r.id_paciente = p.id_paciente
+    JOIN
+    leitos l ON l.id_leito = r.id_leito
+WHERE
+	l.tipo = "pediatrico";
+    
+SELECT * FROM vw_pacientes_pediatricos;
+
+/* 7. View de pacientes sem e-mail
+Crie uma view vw_pacientes_sem_email que mostre os pacientes cujo campo de email está vazio ou nulo. */
+SELECT * FROM PACIENTES;
+
+CREATE OR REPLACE VIEW vw_pacientes_sem_email AS
+SELECT
+	p.id_paciente,
+    p.nome
+FROM
+	pacientes p
+WHERE
+	p.email IS NULL;
+    
+SELECT * FROM vw_pacientes_sem_email;
+
+/* 8. View de pacientes com nome iniciando em 'M'
+Crie uma view vw_pacientes_m que liste apenas os pacientes cujo nome começa com a letra "M" */
+CREATE OR REPLACE VIEW vw_pacientes_m AS
+SELECT
+	id_paciente,
+    nome
+FROM
+	pacientes p 
+WHERE nome LIKE 'm%';
+    
+SELECT * FROM vw_pacientes_m;
+
+/* 9. View de reservas agrupadas por tipo de quarto
+Crie uma view vw_total_por_tipo que mostre o tipo de leito e o total de pacientes que já o reservaram. */
+CREATE OR REPLACE VIEW vw_total_por_tipo AS
+SELECT 
+	l.tipo,
+    COUNT(p.id_paciente) AS total_pacientes
+FROM
+	pacientes p
+    JOIN
+	reservas r ON r.id_paciente = p.id_paciente
+    JOIN
+	leitos l ON l.id_leito = r.id_leito
+GROUP BY l.tipo;
+
+SELECT * FROM vw_total_por_tipo;
+
+/* 10. Atualizar view com coluna adicional
+Altere a view vw_reservas_completas para incluir a data de nascimento do paciente. */
+CREATE OR REPLACE VIEW vw_reservas_completas AS
+SELECT
+	p.nome,
+	p.data_nascimento,
+    l.numero_quarto,
+    l.tipo,
+    r.data_reserva
+FROM
+	reservas r
+    JOIN
+    leitos l ON l.id_leito = r.id_leito
+    JOIN
+	pacientes p ON r.id_paciente = p.id_paciente;
+    
+SELECT * FROM vw_reservas_completas;
+
+/* 11. Substituir view de pacientes pediátricos 
+Modifique a view vw_pacientes_pediatricos para que também exiba o número do quarto pediátrico reservado. */
+CREATE OR REPLACE VIEW vw_pacientes_pediatricos AS
+SELECT	
+	p.nome,
+    r.data_reserva,
+    l.numero_quarto
+FROM
+	pacientes p
+    JOIN 
+    reservas r ON r.id_paciente = p.id_paciente
+    JOIN
+    leitos l ON l.id_leito = r.id_leito
+WHERE
+	l.tipo = "pediatrico";
+    
+SELECT * FROM vw_pacientes_pediatricos;
+
+/* 12. Atualizar view de leitos populares
+Atualize a view vw_leitos_populares para exibir também o tipo do leito associado. */
+CREATE OR REPLACE VIEW vw_leitos_populares AS
+SELECT 
+	l.id_leito,
+    COUNT(r.id_reserva) AS numero_reservas,
+    l.tipo
+FROM 
+	leitos l
+    JOIN
+    reservas r ON r.id_leito= l.id_leito
+GROUP BY id_leito
+ORDER BY numero_reservas desc;
+
+SELECT * FROM vw_leitos_populares;
