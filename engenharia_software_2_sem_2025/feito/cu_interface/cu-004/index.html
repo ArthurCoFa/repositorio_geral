@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICO - Gerenciar Equipes</title>
+    <link rel="stylesheet" href="style.css"> 
+	<script src='script.js'></script>
+</head>
+<body>
+    <div class="header-sico">
+        <h1>Gerenciamento de Equipes de Vendas</h1>
+    </div>
+
+    <div class="main-container">
+        
+        <div class="list-card">
+            <div class="section-title">Equipes Registradas</div>
+            <table class="teams-table">
+                <thead>
+                    <tr>
+                        <th>ID Equipe</th>
+                        <th>Supervisor</th>
+                        <th>Membros</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>Ana Souza (001)</td>
+                        <td>12</td>
+                        <td class="status-active">Ativa</td>
+                        <td><button class="btn-edit">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>Bruno Costa (005)</td>
+                        <td>8</td>
+                        <td class="status-active">Ativa</td>
+                        <td><button class="btn-edit">Editar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn-primary create-btn">Criar Nova Equipe</button>
+        </div>
+
+        <div class="form-card">
+            <form class="team-details-form">
+                <div class="section-title">Detalhes da Equipe</div>
+
+                <div class="input-group">
+                    <label for="idEquipe">ID da Equipe</label>
+                    <input type="text" id="idEquipe" placeholder="Preenchido ao salvar ou editar" disabled>
+                </div>
+                
+                <div class="input-group">
+                    <label for="nomeEquipe">Nome da Equipe</label>
+                    <input type="text" id="nomeEquipe" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="idRegiao">ID da Região</label>
+                    <input type="text" id="idRegiao" required>
+                </div>
+                <div class="section-title sub-title">Alocação de Pessoal</div>
+                
+                <div class="input-group">
+                    <label for="idSupervisor">ID do Supervisor</label>
+                    <input type="text" id="idSupervisor" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="vendedorId">Adicionar Vendedor por ID</label>
+                    <input type="text" id="vendedorId">
+                    <button type="button" class="btn-add">Adicionar</button>
+                </div>
+
+                <div class="members-list-box">
+                    <p>Membros Atuais:</p>
+                    <ul>
+                        <li>01 (João Silva) <button type="button" class="btn-remove">Remover</button></li>
+                        <li>02 (Maria Oliveira) <button type="button" class="btn-remove">Remover</button></li>
+                    </ul>
+                </div>
+
+                <div class="button-group-footer">
+                    <button type="submit" class="btn-primary">SALVAR EQUIPE</button>
+                    <button type="button" class="btn-secondary">DESATIVAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
